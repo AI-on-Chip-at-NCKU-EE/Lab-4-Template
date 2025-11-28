@@ -51,7 +51,7 @@ AS_INCLUDES =
 
 # C includes
 C_INCLUDES = \
-        -I /opt/verilator-5.030/share/verilator/include \
+        -I /usr/local/share/verilator/include \
         -I $(INCLUDE_DIR)/eyeriss \
         -I $(INCLUDE_DIR)/hal \
         -I $(HW_DIR)/ \
