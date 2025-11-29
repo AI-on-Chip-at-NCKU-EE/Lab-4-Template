@@ -12,6 +12,12 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor != 'github-classroom[bot]'
     steps:
+    - name: Setup verilator
+    - uses: actions/checkout@v4
+    - uses: veryl-lang/setup-verilator@v1
+      with:
+        version: 5.030
+    - run: verilator --version
     - name: Checkout code
       uses: actions/checkout@v4
     - name: dla compilation test
