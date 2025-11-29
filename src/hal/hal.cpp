@@ -20,8 +20,7 @@ void HardwareAbstractionLayer::vcd_final() { delete VCD_FP; }
 
 /* ========================= HAL ========================= */
 /* HAL Constructor */
-HardwareAbstractionLayer::HardwareAbstractionLayer(uint32_t baseaddr,
-                                                   uint32_t mmio_size) {
+HardwareAbstractionLayer::HardwareAbstractionLayer(uint32_t baseaddr, uint32_t mmio_size) {
     this->vm_addr_h = ((uint64_t)(this) & 0xffffffff00000000);
     this->baseaddr = baseaddr;
     this->mmio_size = mmio_size;
@@ -84,9 +83,7 @@ bool HardwareAbstractionLayer::memory_set(uint32_t addr, uint32_t data) {
 #endif
     if (addr < baseaddr || addr > baseaddr + mmio_size) {
 #ifdef DEBUG
-        fprintf(stderr,
-                "[HAL ERROR] address 0x%08x is not in device MMIO range.\n",
-                addr);
+        fprintf(stderr, "[HAL ERROR] address 0x%08x is not in device MMIO range.\n", addr);
 #endif
         return false;
     }
@@ -123,9 +120,7 @@ bool HardwareAbstractionLayer::memory_get(uint32_t addr, uint32_t &data) {
 #endif
     if (addr < baseaddr || addr > baseaddr + mmio_size) {
 #ifdef DEBUG
-        fprintf(stderr,
-                "[HAL ERROR] address 0x%08x is not in device MMIO range.\n",
-                addr);
+        fprintf(stderr, "[HAL ERROR] address 0x%08x is not in device MMIO range.\n", addr);
 #endif
         return false;
     }
@@ -188,8 +183,7 @@ void HardwareAbstractionLayer::handle_dma_read() {
     clock_step(device, ACLK, info.elapsed_cycle, info.elapsed_time);
 
 #ifdef DEBUG
-    fprintf(stderr, "[HAL handle_dma_read] addr = %p, len = %d \n", addr,
-            len + 1);
+    fprintf(stderr, "[HAL handle_dma_read] addr = %p, len = %d \n", addr, len + 1);
 #endif
 
     // send read data (increase mode, burst_size 32bits)
@@ -213,8 +207,7 @@ void HardwareAbstractionLayer::handle_dma_write() {
     clock_step(device, ACLK, info.elapsed_cycle, info.elapsed_time);
 
 #ifdef DEBUG
-    fprintf(stderr, "[HAL handle_dma_write] addr = %p, len = %d \n", addr,
-            len + 1);
+    fprintf(stderr, "[HAL handle_dma_write] addr = %p, len = %d \n", addr, len + 1);
 #endif
 
     // recv write data (increase mode, burst_size 32bits)
@@ -227,9 +220,7 @@ void HardwareAbstractionLayer::handle_dma_write() {
     info.memory_write += sizeof(uint32_t) * (len + 1);
 }
 
-struct runtime_info HardwareAbstractionLayer::get_runtime_info() {
-    return info;
-}
+struct runtime_info HardwareAbstractionLayer::get_runtime_info() { return info; }
 
 void HardwareAbstractionLayer::reset_runtime_info() {
     info.elapsed_cycle = 0;

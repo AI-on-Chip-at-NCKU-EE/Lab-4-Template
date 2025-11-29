@@ -41,9 +41,9 @@ int main() {
             printf("[Checking] %d/12288\n", i);
         }
         if (compute_output[i] != golden_tensor[i]) {
-            printf("Index %d is wrong: Correct answer: %d Your answer: %d", i,
+            fprintf(stderr, "Index %d is wrong: Correct answer: %d Your answer: %d", i,
                    golden_tensor[i], compute_output[i]);
-            printf("\n");
+            fprintf(stderr, "\n");
             err += 1;
         }
     }
@@ -51,9 +51,10 @@ int main() {
     if (err == 0) {
         printf("Simulation all pass!\n");
     } else {
-        printf("There are %d errors\n", err);
+        fprintf(stderr, "There are %d errors\n", err);
+        err = 1;
     }
 
     dla_final();
-    return 0;
+    return err;
 }

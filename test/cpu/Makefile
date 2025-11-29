@@ -96,7 +96,8 @@ usage:
 test: $(TARGET) | $(LOG_DIR)
 	@echo ""
 	@echo "Running test with VER=$(VER), OP=$(OP)"
-	@./$(TARGET) | tee $(LOG_DIR)/$(TARGET).log
+	@./$(TARGET) > $(LOG_DIR)/$(TARGET).log
+# 	@./$(ELF_NAME) 1> >(tee out.log) 2> >(tee err.log >&2)
 
 valgrind: $(TARGET) | $(LOG_DIR) $(CACHEGRIND_OUTPUT_DIR) $(MASSIF_OUTPUT_DIR)
 	@echo ""

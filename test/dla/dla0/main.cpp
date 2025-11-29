@@ -36,9 +36,9 @@ int main() {
     /* Verify */
     for (int i = 0; i < 1024; i++) {
         if (conv_relu_ans[i] != conv_relu_ans_golden[i]) {
-            printf("Index %d is wrong: Correct answer: %d Your answer: %d", i,
+            fprintf(stderr, "Index %d is wrong: Correct answer: %d Your answer: %d", i,
                    conv_relu_ans_golden[i], conv_relu_ans[i]);
-            printf("\n");
+            fprintf(stderr, "\n");
             err += 1;
         }
     }
@@ -46,10 +46,11 @@ int main() {
     if (err == 0) {
         printf("Simulation all pass!\n");
     } else {
-        printf("There are %d errors", err);
-        printf("\n");
+        fprintf(stderr, "There are %d errors", err);
+        fprintf(stderr, "\n");
+        err = 1;
     }
 
     dla_final();
-    return 0;
+    return err;
 }

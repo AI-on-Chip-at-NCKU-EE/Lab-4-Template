@@ -16,27 +16,25 @@
 #include "hal.hpp"
 
 /* ========================= DLA Register Base Address & Size ========================= */
-#define DLA_MMIO_BASE_ADDR  0x10040000   ///< Base address of the DLA MMIO registers.
-#define DLA_MMIO_SIZE 0x1000  ///< Size of the DLA register memory map.
-
+#define DLA_MMIO_BASE_ADDR 0x10040000  ///< Base address of the DLA MMIO registers.
+#define DLA_MMIO_SIZE 0x1000           ///< Size of the DLA register memory map.
 
 /* ========================= DLA Register Offsets ========================= */
-#define DLA_ENABLE_OFFSET 0x0  ///< Offset for enabling/disabling the DLA.
-#define DLA_MAPPING_PARAM_OFFSET   0x4  ///< Offset for setting mapping parameters.
-#define DLA_SHAPE_PARAM1_OFFSET    0x8  ///< Offset for shape parameters (filter, channel).
-#define DLA_SHAPE_PARAM2_OFFSET    0xc  ///< Offset for shape parameters (input size, padding).
-#define DLA_IFMAP_ADDR_OFFSET      0x10   ///< Offset for input feature map address.
-#define DLA_FILTER_ADDR_OFFSET     0x14  ///< Offset for filter weights address.
-#define DLA_BIAS_ADDR_OFFSET       0x18    ///< Offset for bias values address.
-#define DLA_OPSUM_ADDR_OFFSET      0x1c   ///< Offset for output sum buffer address.
+#define DLA_ENABLE_OFFSET 0x0            ///< Offset for enabling/disabling the DLA.
+#define DLA_MAPPING_PARAM_OFFSET 0x4     ///< Offset for setting mapping parameters.
+#define DLA_SHAPE_PARAM1_OFFSET 0x8      ///< Offset for shape parameters (filter, channel).
+#define DLA_SHAPE_PARAM2_OFFSET 0xc      ///< Offset for shape parameters (input size, padding).
+#define DLA_IFMAP_ADDR_OFFSET 0x10       ///< Offset for input feature map address.
+#define DLA_FILTER_ADDR_OFFSET 0x14      ///< Offset for filter weights address.
+#define DLA_BIAS_ADDR_OFFSET 0x18        ///< Offset for bias values address.
+#define DLA_OPSUM_ADDR_OFFSET 0x1c       ///< Offset for output sum buffer address.
 #define DLA_GLB_FILTER_ADDR_OFFSET 0x20  ///< Offset for global filter weights address.
-#define DLA_GLB_OFMAP_ADDR_OFFSET  0x24  ///< Offset for global output feature map address.
-#define DLA_GLB_BIAS_ADDR_OFFSET   0x28                           ///< Offset for global bias values address.
-#define DLA_IFMAP_LEN_OFFSET       0x2c  ///< Offset for input activation length.
-#define DLA_OFMAP_LEN_OFFSET       0x30  ///< Offset for output activation length.
+#define DLA_GLB_OFMAP_ADDR_OFFSET 0x24   ///< Offset for global output feature map address.
+#define DLA_GLB_BIAS_ADDR_OFFSET 0x28    ///< Offset for global bias values address.
+#define DLA_IFMAP_LEN_OFFSET 0x2c        ///< Offset for input activation length.
+#define DLA_OFMAP_LEN_OFFSET 0x30        ///< Offset for output activation length.
 
 #define DLA_UNDEFINED  ///< Placeholder for undefined registers.
-
 
 /* ========================= Function Prototypes ========================= */
 
@@ -90,8 +88,7 @@ void set_enable(uint32_t scale_factor, bool maxpool, bool relu, bool operation);
  * @param r Stride in the R-dimension.
  * @param t Tile size in the T-dimension.
  */
-void set_mapping_param(uint32_t m, uint32_t e, uint32_t p, uint32_t q,
-                       uint32_t r, uint32_t t);
+void set_mapping_param(uint32_t m, uint32_t e, uint32_t p, uint32_t q, uint32_t r, uint32_t t);
 
 /**
  * @brief Configures shape parameters related to filter size, channels, and
@@ -103,8 +100,7 @@ void set_mapping_param(uint32_t m, uint32_t e, uint32_t p, uint32_t q,
  * @param C Input channels.
  * @param M Output channels.
  */
-void set_shape_param1(uint32_t PAD, uint32_t U, uint32_t R, uint32_t S,
-                      uint32_t C, uint32_t M);
+void set_shape_param1(uint32_t PAD, uint32_t U, uint32_t R, uint32_t S, uint32_t C, uint32_t M);
 
 /**
  * @brief Sets additional shape parameters including input width and height.

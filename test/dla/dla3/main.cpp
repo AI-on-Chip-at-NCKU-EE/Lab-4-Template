@@ -57,11 +57,11 @@ int main() {
             printf("[Checking] %d/12288\n", i);
         }
         if (cpu_output[i] != dla_output[i]) {
-            printf(
+            fprintf(stderr, 
                 "Index %d is wrong: cpu_output answer: %d dla_output answer: "
                 "%d",
                 i, cpu_output[i], dla_output[i]);
-            printf("\n");
+            fprintf(stderr, "\n");
             err += 1;
         }
     }
@@ -69,10 +69,11 @@ int main() {
     if (err == 0) {
         printf("Simulation all pass!\n");
     } else {
-        printf("There are %d errors\n", err);
+        fprintf(stderr, "There are %d errors\n", err);
+        err = 1
     }
 
     dla_final();
 
-    return 0;
+    return err;
 }

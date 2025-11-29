@@ -61,5 +61,9 @@ int main() {
 #endif
 
     if (err == 0) printf("CYCLE: %d\n", cycle);
+    else{
+        err = 1;
+        fprintf(stderr, "err: %d\n", err);
+    }
     return err;
 }

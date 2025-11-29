@@ -46,11 +46,10 @@ void create_dla_info_to_csv(const char *filename) {
 
 void dump_dla_info_to_csv(const char *filename, const char *operation_name,
                           // mapping parameter
-                          uint32_t m, uint32_t e, uint32_t p, uint32_t q,
-                          uint32_t r, uint32_t t,
+                          uint32_t m, uint32_t e, uint32_t p, uint32_t q, uint32_t r, uint32_t t,
                           // shape parameter
-                          uint32_t PAD, uint32_t U, uint32_t R, uint32_t S,
-                          uint32_t C, uint32_t M, uint32_t W, uint32_t H) {
+                          uint32_t PAD, uint32_t U, uint32_t R, uint32_t S, uint32_t C, uint32_t M, uint32_t W,
+                          uint32_t H) {
     FILE *file = fopen(filename, "a");
     struct runtime_info info = get_runtime_info();
     fprintf(file, "%s,", operation_name);        // Operation
@@ -63,15 +62,14 @@ void dump_dla_info_to_csv(const char *filename, const char *operation_name,
     fclose(file);
 }
 
-int qconv2d_relu_maxpool(
-    uint8_t *input_in_DRAM, int8_t *filter_in_DRAM, uint8_t *opsum_in_DRAM,
-    int32_t *bias, uint32_t ofmap_len, uint32_t ifmap_len, uint32_t filter_len,
-    // mapping parameter
-    uint32_t m, uint32_t e, uint32_t p, uint32_t q, uint32_t r, uint32_t t,
-    // shape parameter
-    uint32_t PAD, uint32_t U, uint32_t R, uint32_t S, uint32_t C, uint32_t M,
-    uint32_t W, uint32_t H,
-    uint32_t scale) {  // int32_t scale_factor: merge ifmap and weight and ofmap
+int qconv2d_relu_maxpool(uint8_t *input_in_DRAM, int8_t *filter_in_DRAM, uint8_t *opsum_in_DRAM, int32_t *bias,
+                         uint32_t ofmap_len, uint32_t ifmap_len, uint32_t filter_len,
+                         // mapping parameter
+                         uint32_t m, uint32_t e, uint32_t p, uint32_t q, uint32_t r, uint32_t t,
+                         // shape parameter
+                         uint32_t PAD, uint32_t U, uint32_t R, uint32_t S, uint32_t C, uint32_t M, uint32_t W,
+                         uint32_t H,
+                         uint32_t scale) {  // int32_t scale_factor: merge ifmap and weight and ofmap
     // scale bit-shift
 
 #ifdef DLA_INFO
@@ -85,21 +83,17 @@ int qconv2d_relu_maxpool(
     wait_for_interrupt();
     dla_stop();
 #ifdef DLA_INFO
-    dump_dla_info_to_csv(DLA_INFO_CSV, "qconv2d_relu_maxpool", m, e, p, q, r, t,
-                         PAD, U, R, S, C, M, W, H);
+    dump_dla_info_to_csv(DLA_INFO_CSV, "qconv2d_relu_maxpool", m, e, p, q, r, t, PAD, U, R, S, C, M, W, H);
 #endif
     return 0;
 };
 
-int qconv2d_relu(uint8_t *input_in_DRAM, int8_t *filter_in_DRAM,
-                 uint8_t *opsum_in_DRAM, int32_t *bias, uint32_t ofmap_len,
-                 uint32_t ifmap_len, uint32_t filter_len,
+int qconv2d_relu(uint8_t *input_in_DRAM, int8_t *filter_in_DRAM, uint8_t *opsum_in_DRAM, int32_t *bias,
+                 uint32_t ofmap_len, uint32_t ifmap_len, uint32_t filter_len,
                  // mapping parameter
-                 uint32_t m, uint32_t e, uint32_t p, uint32_t q, uint32_t r,
-                 uint32_t t,
+                 uint32_t m, uint32_t e, uint32_t p, uint32_t q, uint32_t r, uint32_t t,
                  // shape parameter
-                 uint32_t PAD, uint32_t U, uint32_t R, uint32_t S, uint32_t C,
-                 uint32_t M, uint32_t W, uint32_t H,
+                 uint32_t PAD, uint32_t U, uint32_t R, uint32_t S, uint32_t C, uint32_t M, uint32_t W, uint32_t H,
                  uint32_t scale) {  // int32_t scale_factor: merge ifmap and
                                     // ofmap scale bit-shift
 #ifdef DLA_INFO
@@ -113,8 +107,7 @@ int qconv2d_relu(uint8_t *input_in_DRAM, int8_t *filter_in_DRAM,
     wait_for_interrupt();
     dla_stop();
 #ifdef DLA_INFO
-    dump_dla_info_to_csv(DLA_INFO_CSV, "qconv2d_relu", m, e, p, q, r, t, PAD, U,
-                         R, S, C, M, W, H);
+    dump_dla_info_to_csv(DLA_INFO_CSV, "qconv2d_relu", m, e, p, q, r, t, PAD, U, R, S, C, M, W, H);
 #endif
     return 0;
 };

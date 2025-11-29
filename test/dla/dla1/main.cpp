@@ -40,10 +40,12 @@ int main() {
         if ((i & 0xff) == 0) {
             printf("[Checking] %d/16384\n", i);
         }
+        // insert wrong answer
+        conv_relu_max_ans[i] = 0;
         if (conv_relu_max_ans[i] != conv_relu_max_ans_golden[i]) {
-            printf("Index %d is wrong: Correct answer: %d Your answer: %d", i,
+            fprintf(stderr, "Index %d is wrong: Correct answer: %d Your answer: %d", i,
                    conv_relu_max_ans_golden[i], conv_relu_max_ans[i]);
-            printf("\n");
+            fprintf(stderr, "\n");
             err += 1;
         }
     }
@@ -51,9 +53,10 @@ int main() {
     if (err == 0) {
         printf("Simulation all pass!\n");
     } else {
-        printf("There are %d errors\n", err);
+        fprintf(stderr, "There are %d errors\n", err);
+        err = 1;
     }
 
     dla_final();
-    return 0;
+    return err;
 }
