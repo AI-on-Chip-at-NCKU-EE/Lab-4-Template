@@ -10,6 +10,7 @@ permissions:
 jobs:
   run-autograding-tests:
     runs-on: ubuntu-latest
+    container: ghcr.io/jackiempty/aoc2026-env:latest
     if: github.actor != 'github-classroom[bot]'
     steps:
     - name: Setup verilator
