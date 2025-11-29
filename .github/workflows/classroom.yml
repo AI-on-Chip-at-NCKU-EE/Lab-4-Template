@@ -13,13 +13,6 @@ jobs:
     container: jackiempty/aoc2026-env:latest
     if: github.actor != 'github-classroom[bot]'
     steps:
-    - name: Setup verilator
-      uses: veryl-lang/setup-verilator@v1
-      with:
-        version: 5.030
-        command: |
-          verilator --version
-        timeout: 10
     - name: Checkout code
       uses: actions/checkout@v4
     - name: dla compilation test
