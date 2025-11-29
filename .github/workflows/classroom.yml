@@ -1,0 +1,54 @@
+name: Autograding Tests
+on:
+  - push
+  - workflow_dispatch
+  - repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: dla compilation test
+      id: dla-compilation-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: DLA compilation test
+        command: |
+          cd test/dla
+          make all -j
+        timeout: 10
+        max-score: 10
+    - name: DLA Test
+      id: dla-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: DLA Test
+        command: |
+          cd test/dla
+          make test
+        timeout: 10
+        max-score: 25
+    - name: CPU Test
+      id: cpu-test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: CPU Test
+        command: |
+          cd test/cpu
+          make all
+        timeout: 10
+        max-score: 25
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        ASSEMBLY-COMPILATION-TEST_RESULTS: "${{steps.dla-compilation-test.outputs.result}}"
+        MERGE-SORT-TEST_RESULTS: "${{steps.dla-test.outputs.result}}"
+        SUDOKU-SOLVER-TEST_RESULTS: "${{steps.cpu-test.outputs.result}}"
+      with:
+        runners: dla-compilation-test,dla-test,cpu-test
