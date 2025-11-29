@@ -70,7 +70,7 @@ int main() {
         printf("Simulation all pass!\n");
     } else {
         fprintf(stderr, "There are %d errors\n", err);
-        err = 1
+        err = 1;
     }
 
     dla_final();
