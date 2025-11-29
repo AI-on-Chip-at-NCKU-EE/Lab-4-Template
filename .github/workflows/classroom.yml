@@ -47,8 +47,8 @@ jobs:
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
-        ASSEMBLY-COMPILATION-TEST_RESULTS: "${{steps.dla-compilation-test.outputs.result}}"
-        MERGE-SORT-TEST_RESULTS: "${{steps.dla-test.outputs.result}}"
-        SUDOKU-SOLVER-TEST_RESULTS: "${{steps.cpu-test.outputs.result}}"
+        DLA-COMPILATION-TEST_RESULTS: "${{steps.dla-compilation-test.outputs.result}}"
+        DLA-TEST_RESULTS: "${{steps.dla-test.outputs.result}}"
+        CPU-TEST_RESULTS: "${{steps.cpu-test.outputs.result}}"
       with:
         runners: dla-compilation-test,dla-test,cpu-test
