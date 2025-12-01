@@ -13,40 +13,22 @@ jobs:
     container: jackiempty/aoc2026-env:latest
     if: github.actor != 'github-classroom[bot]'
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-    - name: Build All Executables
-      run: |
-        cd test/dla
-        make all -j
-        ls -l ./dla*/*.elf
-        cd ../cpu
-        make all -j
-        ls -l ./elf/*.elf
-    - name: DLA Test
-      id: dla-test
-      uses: classroom-resources/autograding-command-grader@v1
-      with:
-        test-name: DLA Test
-        command: |
-          cd test/dla
-          make test
-        timeout: 10
-        max-score: 25
-    - name: CPU Test
-      id: cpu-test
-      uses: classroom-resources/autograding-command-grader@v1
-      with:
-        test-name: CPU Test
-        command: |
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build CPU Tests
+        run: |
+          echo "Building CPU kernels..."
           cd test/cpu
           make all
-        timeout: 10
-        max-score: 25
-    - name: Autograding Reporter
-      uses: classroom-resources/autograding-grading-reporter@v1
-      env:
-        DLA-TEST_RESULTS: "${{steps.dla-test.outputs.result}}"
-        CPU-TEST_RESULTS: "${{steps.cpu-test.outputs.result}}"
-      with:
-        runners: dla-test,cpu-test
+          ls -l elf/
+
+      - name: Build DLA Tests
+        run: |
+          echo "Building DLA kernels..."
+          cd test/dla
+          make all -j
+          ls -l dla*/*.elf
+
+      - name: Run Autograding Tests
+        uses: education/autograding@v1

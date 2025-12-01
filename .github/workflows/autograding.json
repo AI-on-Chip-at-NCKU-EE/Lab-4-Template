@@ -1,0 +1,124 @@
+{
+  "tests": [
+    {
+      "name": "CPU: CONV (Original)",
+      "setup": "",
+      "run": "./test/cpu/elf/CONV_original.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 5
+    },
+    {
+      "name": "CPU: CONV (Improve)",
+      "setup": "",
+      "run": "./test/cpu/elf/CONV_improve.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 10
+    },
+    {
+      "name": "CPU: CONV_MAX (Original)",
+      "setup": "",
+      "run": "./test/cpu/elf/CONV_MAX_original.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 5
+    },
+    {
+      "name": "CPU: CONV_MAX (Improve)",
+      "setup": "",
+      "run": "./test/cpu/elf/CONV_MAX_improve.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 10
+    },
+    {
+      "name": "CPU: LINEAR (Original)",
+      "setup": "",
+      "run": "./test/cpu/elf/LINEAR_original.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 5
+    },
+    {
+      "name": "CPU: LINEAR (Improve)",
+      "setup": "",
+      "run": "./test/cpu/elf/LINEAR_improve.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 10
+    },
+    {
+      "name": "CPU: LINEAR_RELU (Original)",
+      "setup": "",
+      "run": "./test/cpu/elf/LINEAR_RELU_original.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 5
+    },
+    {
+      "name": "CPU: LINEAR_RELU (Improve)",
+      "setup": "",
+      "run": "./test/cpu/elf/LINEAR_RELU_improve.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 10
+    },
+    {
+      "name": "DLA: System 0",
+      "setup": "",
+      "run": "cd test/dla/dla0 && ./main.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 5,
+      "points": 10
+    },
+    {
+      "name": "DLA: System 1",
+      "setup": "",
+      "run": "cd test/dla/dla1 && ./main.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 5,
+      "points": 10
+    },
+    {
+      "name": "DLA: System 2",
+      "setup": "",
+      "run": "cd test/dla/dla2 && ./main.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 5,
+      "points": 10
+    },
+    {
+      "name": "DLA: System 3",
+      "setup": "",
+      "run": "cd test/dla/dla3 && ./main.elf",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 5,
+      "points": 10
+    }
+  ]
+}
