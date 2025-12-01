@@ -15,16 +15,14 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-    - name: dla compilation test
-      id: dla-compilation-test
-      uses: classroom-resources/autograding-command-grader@v1
-      with:
-        test-name: DLA compilation test
-        command: |
-          cd test/dla
-          make all -j
-        timeout: 10
-        max-score: 10
+    - name: Build All Executables
+      run: |
+        cd test/dla
+        make all -j
+        ls -l ./dla*/*.elf
+        cd ../cpu
+        make all -j
+        ls -l ./elf/*.elf
     - name: DLA Test
       id: dla-test
       uses: classroom-resources/autograding-command-grader@v1
@@ -48,8 +46,7 @@ jobs:
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
-        DLA-COMPILATION-TEST_RESULTS: "${{steps.dla-compilation-test.outputs.result}}"
         DLA-TEST_RESULTS: "${{steps.dla-test.outputs.result}}"
         CPU-TEST_RESULTS: "${{steps.cpu-test.outputs.result}}"
       with:
-        runners: dla-compilation-test,dla-test,cpu-test
+        runners: dla-test,cpu-test
