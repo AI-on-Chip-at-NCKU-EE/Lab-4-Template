@@ -12,7 +12,7 @@ void verify_output(uint8_t *result, uint8_t *golden, int len,
                    const char *name) {
     for (int i = 0; i < len; i++) {
         if (result[i] != golden[i]) {
-            printf("Error at %d: Expected = %d, Got = %d\n", i + 1, golden[i],
+            fprintf(stderr, "Error at %d: Expected = %d, Got = %d\n", i + 1, golden[i],
                    result[i]);
             err++;
         }
