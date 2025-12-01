@@ -29,6 +29,7 @@ TOP_DIR = $(PROJECTBASE)
 
 OBJ_DIR := build
 LOG_DIR := log
+TARGET_DIR := elf
 CACHEGRIND_OUTPUT_DIR:= cachegrind_out
 MASSIF_OUTPUT_DIR:= massif_out
 MASSIF_VIZUALIZER_DIR:= massif_visual
@@ -64,7 +65,7 @@ vpath %.c $(sort $(dir $(SRC)))
 .PHONY: all default usage test clean valgrind valgrind_all \
 		i_% o_% v_i_% v_o_% \
 
-default: usage
+default: all
 
 usage:
 	@echo "Makefile Usage:"
@@ -93,10 +94,10 @@ usage:
 	@echo "  make usage"
 	@echo ""
 
-test: $(TARGET) | $(LOG_DIR)
+test: $(TARGET_DIR)/$(TARGET) | $(LOG_DIR)
 	@echo ""
 	@echo "Running test with VER=$(VER), OP=$(OP)"
-	@./$(TARGET) > $(LOG_DIR)/$(TARGET).log
+	@./$(TARGET_DIR)/$(TARGET) > $(LOG_DIR)/$(TARGET).log
 # 	@./$(ELF_NAME) 1> >(tee out.log) 2> >(tee err.log >&2)
 
 valgrind: $(TARGET) | $(LOG_DIR) $(CACHEGRIND_OUTPUT_DIR) $(MASSIF_OUTPUT_DIR)
@@ -122,11 +123,14 @@ $(MASSIF_OUTPUT_DIR):
 $(LOG_DIR):
 	mkdir -p $@
 
-$(TARGET): $(OBJ) | $(OBJ_DIR)
+$(TARGET_DIR)/$(TARGET): $(OBJ) | $(OBJ_DIR) $(TARGET_DIR)
 	@echo LD  $@
-	@$(CC) $(CFLAGS) -o $(TARGET) $^ -lm
+	@$(CC) $(CFLAGS) -o $(TARGET_DIR)/$(TARGET) $^ -lm
 
 $(OBJ_DIR):
+	mkdir -p $@
+
+$(TARGET_DIR):
 	mkdir -p $@
 
 $(OBJ_DIR)/$(OP)_$(VER)_%.o: %.cpp | $(OBJ_DIR)
@@ -147,6 +151,14 @@ v_o_%:
 	make valgrind VER=original OP=$(shell echo $* | tr '[:lower:]' '[:upper:]')
 
 all:
+	@for op in $(VALID_OP); do \
+		for ver in $(VALID_VER); do \
+			echo "Building OP=$$op VER=$$ver ..."; \
+			$(MAKE) $(TARGET_DIR)/$${op}_$${ver}.elf VER=$$ver OP=$$op || exit 1; \
+		done \
+	done
+
+run_all:
 	make test VER=original OP=CONV
 	make test VER=original OP=CONV_MAX
 	make test VER=original OP=LINEAR
@@ -172,6 +184,7 @@ massif_visualizer:
 clean:
 	rm -rf $(OBJ_DIR)
 	rm -rf $(LOG_DIR)
+	rm -rf $(TARGET_DIR)
 	rm -rf $(CACHEGRIND_OUTPUT_DIR)
 	rm -rf $(MASSIF_OUTPUT_DIR)
 	rm -rf $(MASSIF_VIZUALIZER_DIR)
