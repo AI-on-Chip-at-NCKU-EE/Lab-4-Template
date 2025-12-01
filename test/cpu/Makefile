@@ -29,6 +29,7 @@ TOP_DIR = $(PROJECTBASE)
 
 OBJ_DIR := build
 LOG_DIR := log
+ERR_DIR := err
 TARGET_DIR := elf
 CACHEGRIND_OUTPUT_DIR:= cachegrind_out
 MASSIF_OUTPUT_DIR:= massif_out
@@ -94,10 +95,10 @@ usage:
 	@echo "  make usage"
 	@echo ""
 
-test: $(TARGET_DIR)/$(TARGET) | $(LOG_DIR)
+test: $(TARGET_DIR)/$(TARGET) | $(LOG_DIR) $(ERR_DIR)
 	@echo ""
 	@echo "Running test with VER=$(VER), OP=$(OP)"
-	@./$(TARGET_DIR)/$(TARGET) > $(LOG_DIR)/$(TARGET).log
+	@./$(TARGET_DIR)/$(TARGET) 1> $(LOG_DIR)/$(TARGET).log 2> $(ERR_DIR)/$(TARGET).log
 # 	@./$(ELF_NAME) 1> >(tee out.log) 2> >(tee err.log >&2)
 
 valgrind: $(TARGET) | $(LOG_DIR) $(CACHEGRIND_OUTPUT_DIR) $(MASSIF_OUTPUT_DIR)
@@ -121,6 +122,9 @@ $(MASSIF_OUTPUT_DIR):
 	mkdir -p $@
 
 $(LOG_DIR):
+	mkdir -p $@
+
+$(ERR_DIR):
 	mkdir -p $@
 
 $(TARGET_DIR)/$(TARGET): $(OBJ) | $(OBJ_DIR) $(TARGET_DIR)
@@ -159,14 +163,12 @@ all:
 	done
 
 run_all:
-	make test VER=original OP=CONV
-	make test VER=original OP=CONV_MAX
-	make test VER=original OP=LINEAR
-	make test VER=original OP=LINEAR_RELU
-	make test VER=improve OP=CONV
-	make test VER=improve OP=CONV_MAX
-	make test VER=improve OP=LINEAR
-	make test VER=improve OP=LINEAR_RELU
+	@for op in $(VALID_OP); do \
+		for ver in $(VALID_VER); do \
+			echo "Testing OP=$$op VER=$$ver ..."; \
+			$(MAKE) test VER=$$ver OP=$$op; \
+		done \
+	done
 
 valgrind_all:
 	make valgrind VER=original OP=CONV
