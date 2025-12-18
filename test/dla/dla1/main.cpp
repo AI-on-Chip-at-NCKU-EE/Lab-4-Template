@@ -40,8 +40,6 @@ int main() {
         if ((i & 0xff) == 0) {
             printf("[Checking] %d/16384\n", i);
         }
-        // insert wrong answer
-        conv_relu_max_ans[i] = 0;
         if (conv_relu_max_ans[i] != conv_relu_max_ans_golden[i]) {
             fprintf(stderr, "Index %d is wrong: Correct answer: %d Your answer: %d", i,
                    conv_relu_max_ans_golden[i], conv_relu_max_ans[i]);
